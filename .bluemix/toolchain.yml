@@ -9,6 +9,7 @@ template:
     - backend-repo
     - tracking-repo
     - management-repo
+    - perfmon-repo
   info:
     git url: >-
       [https://github.com/tonymcguckin/dynamic-source-providers-template](https://github.com/tonymcguckin/dynamic-source-providers-template)
@@ -21,6 +22,15 @@ services:
     $options:
       - xyz: abc
       - hello: 'world'
+  perfmon-repo:
+    $default: hello
+    $options:
+      - xyz: abc
+        foo: {}
+      - hello:
+          world:
+            a: 1
+            b: b
   tracking-repo:
     $default: 'bitbucket'
     $options:
