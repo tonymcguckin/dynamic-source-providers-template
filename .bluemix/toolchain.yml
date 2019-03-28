@@ -8,6 +8,7 @@ template:
     - middleware-repo
     - backend-repo
     - tracking-repo
+    - management-repo
   info:
     git url: >-
       [https://github.com/tonymcguckin/dynamic-source-providers-template](https://github.com/tonymcguckin/dynamic-source-providers-template)
@@ -19,11 +20,7 @@ services:
   management-repo:
     $options:
       - xyz: abc
-        foo: {}
-      - hello:
-          world:
-            a: 1
-            b: b
+      - hello: 'world'
   tracking-repo:
     $default: 'bitbucket'
     $options:
