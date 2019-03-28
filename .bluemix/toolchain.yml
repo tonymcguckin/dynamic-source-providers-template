@@ -1,59 +1,86 @@
 version: '2'
 template:
-  name: "Cloud Functions REST APIs Toolchain"
-  description: "Deploy Serverless REST APIs"
+  name: "Dynamic Source Providers Template"
+  description: "Dynamic Source Providers Template"
   required:
     - build
-    - repo
+    - frontend-repo
+    - middleware-repo
+    - backend-repo
   info:
     git url: >-
-      [https://github.com/IBM/ibm-cloud-functions-refarch-serverless-apis](https://github.com/IBM/ibm-cloud-functions-refarch-serverless-apis)
+      [https://github.com/tonymcguckin/dynamic-source-providers-template](https://github.com/tonymcguckin/dynamic-source-providers-template)
     git branch: >-
-      [master](https://github.com/IBM/ibm-cloud-functions-refarch-serverless-apis/tree/master)
+      [master](https://github.com/tonymcguckin/dynamic-source-providers-template/tree/master)
 toolchain:
-  name: 'cloud-functions-apis-toolchain'
+  name: 'dynamic-source-providers-template-toolchain'
 services:
-{{#hostedgit}}
-  repo:
+  frontend-repo:
+    $default: 'githubpublic'
+    $options:
+      - $ifdef: 'hostedgit'
+        service_id: hostedgit
+        parameters:
+          repo_name: 'frontend-repo-onhostedgit'
+          repo_url: 'https://www.git.com/otc/frontend-repo-onhostedgit'
+          type: clone
+          has_issues: true
+          enable_traceability: true
+      - $ifdef: 'githubpublic'
+        service_id: githubpublic
+        parameters:
+          repo_name: 'frontend-repo-ongithubpublic'
+          repo_url: 'https://www.github.com/otc/frontend-repo-ongithubpublic'
+          type: clone
+          has_issues: true
+          enable_traceability: true
+  middleware-repo:
     service_id: hostedgit
     parameters:
-      repo_name: 'java-app-{{timestamp}}'
-      repo_url: 'https://www.git.com/open-toolchain/java-spring-microservice'
+      repo_name: 'middleware-repo-onhostedgit'
+      repo_url: 'https://www.git.com/otc/middleware-repo-onhostedgit'
       type: clone
       has_issues: true
       enable_traceability: true
-{{/hostedgit}}
-{{#githubpublic}}
-  repo:   
-    service_id: githubpublic
-    parameters:
-      repo_name: 'cloud-functions-apis'
-      repo_url: 'https://github.com/tmcguckin/cloud-functions-apis'
-      type: clone
-      has_issues: true
-{{/githubpublic}}
-{{#github_integrated}}
-  repo:
-    service_id: github_integrated
-    parameters:
-      repo_name: '{{toolchain.name}}'
-      repo_url: 'https://cloud.ibm.github.com/open-toolchain/hello-containers'
-      type: clone
-      has_issues: true
-      enable_traceability: true
-{{/github_integrated}}
+  backend-repo:
+    $parameter: 'backend_source_provider'
+    $default: 'githubpublic'
+    $options:
+      - $ifdef: 'hostedgit'
+        service_id: hostedgit
+        parameters:
+          repo_name: 'backend-repo-onhostedgit'
+          repo_url: 'https://www.git.com/backend-repo'
+          type: clone
+          has_issues: true
+          enable_traceability: true
+      - $ifdef: 'githubpublic'
+        service_id: githubpublic
+        parameters:
+          repo_name: 'backend-repo-ongithubpublic'
+          repo_url: 'https://github.com/otc/backend-repo-ongithubpublic'
+          type: clone
+          has_issues: true
+      - $ifdef: 'github_integrated'
+        service_id: github_integrated
+        parameters:
+          repo_name: 'backend-repo-ongithub_integrated'
+          repo_url: 'https://cloud.ibm.github.com/otc/backend-repo-ongithub_integrated'
+          type: clone
+          has_issues: true
+          enable_traceability: true
   build:
     service_id: pipeline
     parameters:
       services:
-        - repo
-      name: '{{services.repo.parameters.repo_name}}'
+        - frontend-repo
+      name: '{{services.frontend-repo.parameters.repo_name}}'
       ui-pipeline: true
       configuration:
         content:
           $text: pipeline.yml
         env:
-          REPO: repo1
+          REPO: frontend-repo
           USERNAME: '{{form.pipeline.parameters.username}}'
           PASSWORD: '{{form.pipeline.parameters.password}}'
           API_KEY: '{{form.pipeline.parameters.api-key}}'
@@ -64,6 +91,7 @@ services:
         execute: true
 form:
   pipeline:
-    parameters: {}
+    parameters:
+      username: 'admin'
     schema:
       $ref: deploy.json
