@@ -8,8 +8,6 @@ template:
     - middleware-repo
     - backend-repo
     - tracking-repo
-    - management-repo
-    - perfmon-repo
   info:
     git url: >-
       [https://github.com/tonymcguckin/dynamic-source-providers-template](https://github.com/tonymcguckin/dynamic-source-providers-template)
@@ -21,7 +19,7 @@ services:
   tracking-repo:
     $default: 'bitbucket'
     $options:
-      - spare-tools: {} 
+      - tracking-tools: {} 
       - $ifdef: 'hostedgit'
         service_id: hostedgit
         parameters:
