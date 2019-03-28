@@ -24,7 +24,7 @@ stages:
       #!/bin/bash
 
       ./deploy.sh --install
-    docker_image: jamesthomas/cloud-functions-tools
+    docker_image: otc/dynamic-source-providers-template-tools
 hooks:
 - enabled: true
   label: null
