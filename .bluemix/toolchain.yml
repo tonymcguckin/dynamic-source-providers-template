@@ -15,7 +15,15 @@ template:
       [master](https://github.com/tonymcguckin/dynamic-source-providers-template/tree/master)
 toolchain:
   name: 'dynamic-source-providers-template-toolchain'
-services: 
+services:
+  management-repo:
+    $options:
+      - xyz: abc
+        foo: {}
+      - hello:
+          world:
+            a: 1
+            b: b
   tracking-repo:
     $default: 'bitbucket'
     $options:
