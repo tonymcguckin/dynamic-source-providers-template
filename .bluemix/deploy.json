@@ -1,7 +1,7 @@
 {
     "$schema": "http://json-schema.org/draft-04/schema#",
-    "title": "Deploy UI",
-    "description": "Empty Toolchain",
+    "title": "Dynamic Source Providers Template - Deployment UI",
+    "description": "Dynamic Source Providers Template - Deployment UI",
     "longDescription": "The Delivery Pipeline automates continuous deployment.",
     "type": "object",
     "properties": {
@@ -41,7 +41,7 @@
         {
 	        "type": "password",
 	        "readonly": false,
-	        "title": "IBM Cloud API Key",
+	        "title": "API Key",
 	        "key": "api-key"
         },
         {
