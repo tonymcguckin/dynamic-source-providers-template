@@ -17,7 +17,8 @@ toolchain:
   name: 'dynamic-source-providers-template-toolchain'
 services:
   tracking-repo:
-    $default: 'bitbucket'
+    $parameter: 'source_provider'
+    $default: 'hostedgit'
     $options:
       - $ifdef: 'hostedgit'
         service_id: hostedgit
@@ -70,7 +71,6 @@ services:
       has_issues: true
       enable_traceability: true
   backend-repo:
-    $parameter: 'backend_source_provider'
     $default: 'githubpublic'
     $options:
       - $ifdef: 'hostedgit'
