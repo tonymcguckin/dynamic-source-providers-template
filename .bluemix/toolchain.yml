@@ -19,7 +19,6 @@ services:
   tracking-repo:
     $default: 'bitbucket'
     $options:
-      - tracking-tools: {} 
       - $ifdef: 'hostedgit'
         service_id: hostedgit
         parameters:
