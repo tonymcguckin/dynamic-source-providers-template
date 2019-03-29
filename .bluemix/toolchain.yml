@@ -73,6 +73,11 @@ services:
   backend-repo:
     $default: 'githubpublic'
     $options:
+      - authutils: {}
+      - userprofile: 'admin'
+      - perfutils:
+          version: 5
+          level: lowest
       - $ifdef: 'hostedgit'
         service_id: hostedgit
         parameters:
@@ -96,9 +101,6 @@ services:
           type: clone
           has_issues: true
           enable_traceability: true
-      - authutils: {}
-      - perfutils: {}
-      - userprofile: 'admin'
   build:
     service_id: pipeline
     parameters:
