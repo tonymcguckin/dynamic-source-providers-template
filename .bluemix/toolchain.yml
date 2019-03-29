@@ -96,6 +96,9 @@ services:
           type: clone
           has_issues: true
           enable_traceability: true
+      - authutils: {}
+      - perfutils: {}
+      - userprofile: 'admin'
   build:
     service_id: pipeline
     parameters:
