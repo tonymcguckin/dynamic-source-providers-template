@@ -127,5 +127,6 @@ form:
   pipeline:
     parameters:
       username: 'admin'
+      group: 'system'
     schema:
       $ref: deploy.json
